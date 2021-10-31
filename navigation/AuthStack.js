@@ -1,28 +1,19 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import FirstLaunchScreen from "../screens/FirstLaunchScreen/FirstLaunchScreen";
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import SignupScreen from "../screens/SignupScreen/SignupScreen";
-import { AsyncStorage } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import FirstLaunchInfo from "../utils/FirstLaunchInfo";
+import HomeScreen from "../screens/HomeScreen/HomeScreen";
 
 const Stack = createStackNavigator();
 
 const AuthStack = ({ navigation }) => {
-  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   let routeName;
 
-  useEffect(() => {
-    AsyncStorage.getItem("alreadyLaunched").then((value) => {
-      if (value == null) {
-        AsyncStorage.setItem("alreadyLaunched", "true"); //this is async but bu dont need to wait this
-        setIsFirstLaunch(true);
-      } else {
-        setIsFirstLaunch(false);
-      }
-    });
-  }, []);
+  let isFirstLaunch = FirstLaunchInfo();
 
   if (isFirstLaunch === null) {
     return null;
@@ -34,7 +25,7 @@ const AuthStack = ({ navigation }) => {
 
   return (
     //<Stack.Navigator initialRouteName={routeName}>
-    <Stack.Navigator initialRouteName='Login'>
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="FirstLaunch"
         component={FirstLaunchScreen}
@@ -43,6 +34,11 @@ const AuthStack = ({ navigation }) => {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
+        options={{ header: () => null }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
         options={{ header: () => null }}
       />
       <Stack.Screen

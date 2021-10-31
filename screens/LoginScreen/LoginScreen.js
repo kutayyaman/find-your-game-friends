@@ -1,12 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
 import FormButton from "../../components/LoginScreenComponents/FormButton";
 import FormInput from "../../components/LoginScreenComponents/FormInput";
 import SocialButton from "../../components/LoginScreenComponents/SocialButton";
+import firebase from "../../database/firebase";
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  const handleLogin = () => {
+    firebase.auth
+    .signInWithEmailAndPassword(email,password)
+    .then(userCredentials => {
+      const user = userCredentials.user;
+      alert(user.email);
+    })
+    .catch(error => {
+      alert(error.message);
+    })
+  }
+
+  useEffect(()=>{
+    const unsubscribe = firebase.auth.onAuthStateChanged(user => {
+      if(user){
+        navigation.replace("Home");
+      }
+
+      return unsubscribe;
+    }, [])
+  },[])
 
   return (
     <View style={styles.container}>
@@ -35,32 +58,38 @@ const LoginScreen = ({navigation}) => {
 
       <FormButton
         buttonTitle="Sign In"
-        onPress={() => {}}
+        onPress={handleLogin}
       />
 
-      <TouchableOpacity style={styles.forgotButton} onPress={()=>{}}>
-          <Text style={styles.navButtonText}>Forgot Password?</Text>
-          <Text >Forgot?</Text>
+      <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+        <Text style={styles.navButtonText}>Forgot Password?</Text>
       </TouchableOpacity>
 
-      <SocialButton 
-        buttonTitle='Sign In with Facebook'
+      <SocialButton
+        buttonTitle="Sign In with Facebook"
         btnType="facebook"
         color="#4867aa"
         backgroundColor="#e6eaf4"
-        onPress={()=>{}}
+        onPress={() => {}}
       />
 
-<SocialButton 
-        buttonTitle='Sign In with Google'
+      <SocialButton
+        buttonTitle="Sign In with Google"
         btnType="google"
         color="#d34d41"
         backgroundColor="#f5e7ea"
-        onPress={()=>{}}
+        onPress={() => {}}
       />
 
-      <TouchableOpacity style={styles.forgotButton} onPress={()=>{navigation.navigate('Signup')}}>
-          <Text style={styles.navButtonText}>Don't have an account? Create here</Text>
+      <TouchableOpacity
+        style={styles.forgotButton}
+        onPress={() => {
+          navigation.navigate("Signup");
+        }}
+      >
+        <Text style={styles.navButtonText}>
+          Don't have an account? Create here
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -84,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 10,
     color: "#051d5f",
-    fontFamily:'Cochin'
+    fontFamily: "Cochin",
   },
   navButton: {
     marginTop: 15,

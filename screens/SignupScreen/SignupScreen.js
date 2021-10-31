@@ -3,11 +3,25 @@ import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
 import FormButton from "../../components/LoginScreenComponents/FormButton";
 import FormInput from "../../components/LoginScreenComponents/FormInput";
 import SocialButton from "../../components/LoginScreenComponents/SocialButton";
+import firebase from "../../database/firebase";
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
+
+
+  const handleSignUp = () => {
+    firebase.auth
+    .createUserWithEmailAndPassword(email,password)
+    .then(userCredentials => {
+      const user = userCredentials.user;
+      alert("You have successfully signed up");
+    })
+    .catch(error => {
+      alert(error.message);
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -40,7 +54,7 @@ const SignupScreen = ({ navigation }) => {
 
       <FormButton
         buttonTitle="Sign Up"
-        onPress={() => {}}
+        onPress={handleSignUp}
       />
 
       <View style={styles.textPrivate}>
