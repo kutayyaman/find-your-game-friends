@@ -74,7 +74,7 @@ const SignupScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <SocialButton
+      {/*<SocialButton
         buttonTitle="Sign In with Facebook"
         btnType="facebook"
         color="#4867aa"
@@ -90,7 +90,7 @@ const SignupScreen = ({ navigation }) => {
         color="#d34d41"
         backgroundColor="#f5e7ea"
         onPress={() => {}}
-      />
+      />*/}
 
       <TouchableOpacity
         style={styles.navButton}

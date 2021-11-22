@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
 import FormButton from "../../components/LoginScreenComponents/FormButton";
 import FormInput from "../../components/LoginScreenComponents/FormInput";
-import SocialButton from "../../components/LoginScreenComponents/SocialButton";
 import firebase from "../../database/firebase";
 
 const LoginScreen = ({ navigation }) => {
@@ -64,7 +63,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.navButtonText}>Forgot Password?</Text>
       </TouchableOpacity>
 
-      <SocialButton
+      {/*<SocialButton
         buttonTitle="Sign In with Facebook"
         btnType="facebook"
         color="#4867aa"
@@ -78,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
         color="#d34d41"
         backgroundColor="#f5e7ea"
         onPress={() => {}}
-      />
+      />*/}
 
       <TouchableOpacity
         style={styles.forgotButton}
@@ -112,7 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 10,
     color: "#051d5f",
-    fontFamily: "Cochin",
+    /*fontFamily: "Cochin",*/
   },
   navButton: {
     marginTop: 15,

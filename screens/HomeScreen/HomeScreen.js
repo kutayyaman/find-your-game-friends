@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React from "react";
 import firebase from "../../database/firebase";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, PostText, PostImg, InteractionWrapper, Interaction, InteractionText, Divider} from '../../styles/FeedStyles'
 
 const HomeScreen = ({ navigation }) => {
   const handleSignout = () => {
@@ -13,30 +13,53 @@ const HomeScreen = ({ navigation }) => {
       .catch((error) => alert(error.message));
   };
   return (
-    <View style={styles.container}>
-      <Text>Email: {firebase.auth.currentUser?.email}</Text>
-      <TouchableOpacity style={styles.navButton} onPress={handleSignout}>
-        <Text style={styles.navButtonText}>Sign out</Text>
-      </TouchableOpacity>
-    </View>
+    <Container >
+      <Card>
+        <UserInfo>
+          <UserImg source={require('../../assets/background/bg.jpg')}/>
+          <UserInfoText>
+            <UserName>kutay yaman</UserName>
+            <PostTime>4 hour ago</PostTime>
+          </UserInfoText>
+        </UserInfo>
+        <PostText>6. video 21:16'da kaldim</PostText>
+        <PostImg source={require('../../assets/gaming/gaming1.jpg')}/>
+        <InteractionWrapper>
+          <Interaction>
+            <Ionicons name="heart-outline" size={25}/>
+            <InteractionText>Like</InteractionText>
+          </Interaction>
+          <Interaction>
+            <Ionicons name="md-chatbubble-outline" size={25}/>
+            <InteractionText>Comment</InteractionText>
+          </Interaction>
+        </InteractionWrapper>
+      </Card>
+      <Card>
+        <UserInfo>
+          <UserImg source={require('../../assets/gaming/gaming3.jpg')}/>
+          <UserInfoText>
+            <UserName>maral yurdakul</UserName>
+            <PostTime>7 hour ago</PostTime>
+          </UserInfoText>
+        </UserInfo>
+        <PostText>6. video 21:16'da kaldim</PostText>
+        <Divider/>
+        <InteractionWrapper>
+          <Interaction>
+            <Ionicons name="heart-outline" size={25}/>
+            <InteractionText>Like</InteractionText>
+          </Interaction>
+          <Interaction>
+            <Ionicons name="md-chatbubble-outline" size={25}/>
+            <InteractionText>Comment</InteractionText>
+          </Interaction>
+        </InteractionWrapper>
+      </Card>
+    </Container>
   );
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    paddingTop: 50,
-  },
-  navButton: {
-    marginTop: 15,
-  },
-  navButtonText: {
-    fontSize: 18,
-    fontWeight: "500",
-    color: "#2e64e5",
-  },
-});
+
