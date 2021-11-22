@@ -13,8 +13,7 @@ const LoginScreen = ({ navigation }) => {
     firebase.auth
     .signInWithEmailAndPassword(email,password)
     .then(userCredentials => {
-      const user = userCredentials.user;
-      alert(user.email);
+      //login is success
     })
     .catch(error => {
       alert(error.message);
