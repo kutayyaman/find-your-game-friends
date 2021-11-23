@@ -1,7 +1,71 @@
 import React from "react";
+import { Text, TouchableOpacity } from "react-native";
 import firebase from "../../database/firebase";
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, PostText, PostImg, InteractionWrapper, Interaction, InteractionText, Divider} from '../../styles/FeedStyles'
+import { FlatList } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import PostCard from "../../components/HomeScreenComponents/PostCard";
+import {
+  Container,
+} from "../../styles/FeedStyles";
+
+const Posts = [
+  // bunlar firebaseden gelcek simdilik boyle kalsin
+  {
+    id: "1",
+    userName: "Jenny Doe",
+    userImg: require("../../assets/background/bg.jpg"),
+    postTime: "4 mins ago",
+    post: "Hey there, this is my test for a post of my social app in React Native.",
+    postImg: require("../../assets/gaming/gaming1.jpg"),
+    liked: true,
+    likes: "14",
+    comments: "5",
+  },
+  {
+    id: "2",
+    userName: "John Doe",
+    userImg: require("../../assets/login/loginLogo.png"),
+    postTime: "2 hours ago",
+    post: "Hey there, this is my test for a post of my social app in React Native.",
+    postImg: "none",
+    liked: false,
+    likes: "8",
+    comments: "0",
+  },
+  {
+    id: "3",
+    userName: "Ken William",
+    userImg: require("../../assets/background/bg.jpg"),
+    postTime: "1 hours ago",
+    post: "Hey there, this is my test for a post of my social app in React Native.",
+    postImg: require("../../assets/gaming/gaming2.jpg"),
+    liked: true,
+    likes: "1",
+    comments: "0",
+  },
+  {
+    id: "4",
+    userName: "Selina Paul",
+    userImg: require("../../assets/background/bg.jpg"),
+    postTime: "1 day ago",
+    post: "Hey there, this is my test for a post of my social app in React Native.",
+    postImg: require("../../assets/gaming/gaming3.jpg"),
+    liked: true,
+    likes: "22",
+    comments: "1",
+  },
+  {
+    id: "5",
+    userName: "Christy Alex",
+    userImg: require("../../assets/background/bg.jpg"),
+    postTime: "2 days ago",
+    post: "Hey there, this is my test for a post of my social app in React Native.",
+    postImg: "none",
+    liked: false,
+    likes: "0",
+    comments: "0",
+  },
+];
 
 const HomeScreen = ({ navigation }) => {
   const handleSignout = () => {
@@ -13,53 +77,22 @@ const HomeScreen = ({ navigation }) => {
       .catch((error) => alert(error.message));
   };
   return (
-    <Container >
-      <Card>
-        <UserInfo>
-          <UserImg source={require('../../assets/background/bg.jpg')}/>
-          <UserInfoText>
-            <UserName>kutay yaman</UserName>
-            <PostTime>4 hour ago</PostTime>
-          </UserInfoText>
-        </UserInfo>
-        <PostText>6. video 21:16'da kaldim</PostText>
-        <PostImg source={require('../../assets/gaming/gaming1.jpg')}/>
-        <InteractionWrapper>
-          <Interaction>
-            <Ionicons name="heart-outline" size={25}/>
-            <InteractionText>Like</InteractionText>
-          </Interaction>
-          <Interaction>
-            <Ionicons name="md-chatbubble-outline" size={25}/>
-            <InteractionText>Comment</InteractionText>
-          </Interaction>
-        </InteractionWrapper>
-      </Card>
-      <Card>
-        <UserInfo>
-          <UserImg source={require('../../assets/gaming/gaming3.jpg')}/>
-          <UserInfoText>
-            <UserName>maral yurdakul</UserName>
-            <PostTime>7 hour ago</PostTime>
-          </UserInfoText>
-        </UserInfo>
-        <PostText>6. video 21:16'da kaldim</PostText>
-        <Divider/>
-        <InteractionWrapper>
-          <Interaction>
-            <Ionicons name="heart-outline" size={25}/>
-            <InteractionText>Like</InteractionText>
-          </Interaction>
-          <Interaction>
-            <Ionicons name="md-chatbubble-outline" size={25}/>
-            <InteractionText>Comment</InteractionText>
-          </Interaction>
-        </InteractionWrapper>
-      </Card>
+    <Container>
+      <FlatList
+        data={Posts}
+        renderItem={({item}) => <PostCard item={item}/>}
+        keyExtractor={item=>item.id}
+        showsVerticalScrollIndicator={false}
+      />
+      <TouchableOpacity
+        onPress={()=>{
+          navigation.navigate("AddPostScreen")
+        }}
+      >
+        <Text>Press Here</Text>
+      </TouchableOpacity>
     </Container>
   );
 };
 
 export default HomeScreen;
-
-
