@@ -1,4 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
+/*import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import AuthStack from "../navigation/AuthStack";
 
@@ -11,3 +11,4 @@ const Routes = () => {
 };
 
 export default Routes;
+*/

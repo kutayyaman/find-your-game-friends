@@ -1,4 +1,4 @@
-import { createStackNavigator } from "@react-navigation/stack";
+/*import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import FirstLaunchScreen from "../screens/FirstLaunchScreen/FirstLaunchScreen";
@@ -77,3 +77,4 @@ const AuthStack = ({ navigation }) => {
 export default AuthStack;
 
 const styles = StyleSheet.create({});
+*/
