@@ -99,19 +99,19 @@ const Tabs = () => {
               <ActionButton buttonColor="rgba(231,76,60,1)">
                 <ActionButton.Item
                   buttonColor="#9b59b6"
-                  title="Take Photo"
-                  onPress={() => alert("Photo tapped!")}
+                  title="Find Game Friends"
+                  onPress={() => alert("Find Game Friends Tapped!")}
                 >
-                  <Ionicons name="camera-outline" size={25} />
+                  <Ionicons name="people-circle-outline" size={25} />
                 </ActionButton.Item>
                 <ActionButton.Item
                   buttonColor="#3498db"
-                  title="Choose Photo"
+                  title="Send A Post"
                   onPress={() => {
-                    alert("Choose photo tapped");
+                    alert("Send A Post tapped");
                   }}
                 >
-                  <Ionicons name="md-images-outline" size={25} />
+                  <Ionicons name="send-outline" size={25} />
                 </ActionButton.Item>
               </ActionButton>
             </View>
@@ -162,6 +162,30 @@ const Tabs = () => {
                 }}
               />
               <Text>Profile</Text>
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                top: 10,
+              }}
+            >
+              <Ionicons
+                name="chatbox-outline"
+                size={focused ? 35 : 25}
+                style={{
+                  color: focused ? "#e32f45" : "#748c93",
+                }}
+              />
+              <Text>Chat</Text>
             </View>
           ),
         }}
