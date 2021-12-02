@@ -60,7 +60,7 @@ const LoginScreen = ({ navigation }) => {
       />
 
       <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
-        <Text style={styles.navButtonText}>Forgot Password?</Text>
+        <Text style={styles.navButtonText}>Forgot Password?(70.videoda kaldim reduxla alakali olan diger komponentleri reduxla iliskilendirmek)</Text>
       </TouchableOpacity>
 
       {/*<SocialButton
@@ -79,16 +79,6 @@ const LoginScreen = ({ navigation }) => {
         onPress={() => {}}
       />*/}
 
-      <TouchableOpacity
-        style={styles.forgotButton}
-        onPress={() => {
-          navigation.navigate("Signup");
-        }}
-      >
-        <Text style={styles.navButtonText}>
-          Don't have an account? Create here
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 };

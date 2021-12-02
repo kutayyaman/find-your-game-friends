@@ -91,17 +91,6 @@ const SignupScreen = ({ navigation }) => {
         backgroundColor="#f5e7ea"
         onPress={() => {}}
       />*/}
-
-      <TouchableOpacity
-        style={styles.navButton}
-        onPress={() => {
-          navigation.navigate("Login");
-        }}
-      >
-        <Text style={styles.navButtonText}>
-          Have an account? Sign In
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 };
