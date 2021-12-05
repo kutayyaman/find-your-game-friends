@@ -4,6 +4,7 @@ import FormButton from "../../components/LoginScreenComponents/FormButton";
 import FormInput from "../../components/LoginScreenComponents/FormInput";
 import firebase from "../../database/firebase";
 import { useDispatch } from 'react-redux';
+import { loginSuccess } from "../../redux/authActions";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -17,11 +18,7 @@ const LoginScreen = ({ navigation }) => {
     .signInWithEmailAndPassword(email,password)
     .then(userCredentials => {
       //login is success
-      const action = {
-        type: 'login-success',
-        payload: {email,password}
-      }
-      dispatch(action);
+      dispatch(loginSuccess({email,password}));
       
     })
     .catch(error => {
@@ -41,10 +38,6 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/*<Image
-        source={require("../../assets/loginLogo.png")}
-        style={styles.logo}
-      />*/}
       <Text style={styles.text}>Find Your Game Friends</Text>
       <FormInput
         labelValue={email}
@@ -70,24 +63,8 @@ const LoginScreen = ({ navigation }) => {
       />
 
       <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
-        <Text style={styles.navButtonText}>Forgot Password?(70.videoda kaldim reduxla alakali olan diger komponentleri reduxla iliskilendirmek)</Text>
+        <Text style={styles.navButtonText}>Forgot Password?</Text>
       </TouchableOpacity>
-
-      {/*<SocialButton
-        buttonTitle="Sign In with Facebook"
-        btnType="facebook"
-        color="#4867aa"
-        backgroundColor="#e6eaf4"
-        onPress={() => {}}
-      />
-
-      <SocialButton
-        buttonTitle="Sign In with Google"
-        btnType="google"
-        color="#d34d41"
-        backgroundColor="#f5e7ea"
-        onPress={() => {}}
-      />*/}
 
     </View>
   );

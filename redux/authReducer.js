@@ -1,3 +1,5 @@
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "./Constants";
+
 const defaultState = {
     isLoggedIn: false,
     mail:undefined,
@@ -6,10 +8,10 @@ const defaultState = {
   };
 
   const authReducer = (state={...defaultState},action) => {
-    if(action.type=='logout-success'){
+    if(action.type==LOGOUT_SUCCESS){
       return defaultState;
     }
-    if(action.type=='login-success'){
+    if(action.type==LOGIN_SUCCESS){
       return {
         ...action.payload,
         isLoggedIn:true
