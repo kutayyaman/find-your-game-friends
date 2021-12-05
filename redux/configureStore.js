@@ -4,6 +4,20 @@ import { AsyncStorage } from "react-native";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "./authActions";
 import { useState } from "react";
+import * as SecureStoreNew from 'expo-secure-store';
+
+
+async function save(key, value) {
+  await SecureStoreNew.setItemAsync(key, value);
+}
+
+async function getValueFor(key) {
+  let result = await SecureStoreNew.getItemAsync(key);
+  if (result) {
+    return result;
+  } else {
+  }
+}
 
 const configureStore = () => {
   const [stateInLocalStorage, setStateInLocalStorage] = useState({
@@ -13,7 +27,7 @@ const configureStore = () => {
     image: undefined,
   });
 
-  AsyncStorage.getItem("auth").then((authData) => {
+  getValueFor("auth").then((authData)=>{
     if (authData) {
       try {
         const parsedAuthData = JSON.parse(authData);
@@ -23,13 +37,13 @@ const configureStore = () => {
         }
       } catch (error) {}
     }
-  });
+  })
 
   const store = createStore(authReducer, stateInLocalStorage);
 
   store.subscribe(async () => {
     try {
-      await AsyncStorage.setItem("auth", JSON.stringify(store.getState()));
+      await save("auth",store.getState())
     } catch (error) {
       // Error saving data
     }
