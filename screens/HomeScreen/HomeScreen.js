@@ -68,14 +68,6 @@ const Posts = [
 ];
 
 const HomeScreen = ({ navigation }) => {
-  const handleSignout = () => {
-    firebase.auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Login");
-      })
-      .catch((error) => alert(error.message));
-  };
   return (
     <Container>
       <FlatList

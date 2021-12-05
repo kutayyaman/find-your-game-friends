@@ -4,9 +4,11 @@ import AddPostScreen from "../components/AddPostScreen/AddPostScreen";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import SignupScreen from "../screens/SignupScreen/SignupScreen";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ActionButton from "react-native-action-button";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import LogoutButton from "../components/LogoutButton";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,6 +16,10 @@ const IsLoggedInTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
+        showLabel:false,
+        headerRight: () => (
+          <LogoutButton/>
+        ),
         tabBarStyle: {
           position: "absolute",
           bottom: 8,
@@ -29,6 +35,7 @@ const IsLoggedInTabs = () => {
       tabBarOptions={{
         showLabel: false,
       }}
+      
     >
       <Tab.Screen
         name="Home"
