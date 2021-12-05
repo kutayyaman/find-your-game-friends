@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import IsLoggedInTabs from "./IsLoggedInTabs";
 import IsNotLoggedInTabs from "./IsNotLoggedInTabs";
 
-
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
@@ -16,10 +15,8 @@ const Tabs = () => {
     };
   });
 
-  const {isLoggedIn} = reduxState;
-  return (
-    isLoggedIn ? <IsLoggedInTabs/> : <IsNotLoggedInTabs/>
-  );
+  const { isLoggedIn } = reduxState;
+  return isLoggedIn ? <IsLoggedInTabs/> : <IsNotLoggedInTabs />;
 };
 
 const styles = StyleSheet.create({

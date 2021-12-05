@@ -3,16 +3,26 @@ import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
 import FormButton from "../../components/LoginScreenComponents/FormButton";
 import FormInput from "../../components/LoginScreenComponents/FormInput";
 import firebase from "../../database/firebase";
+import { useDispatch } from 'react-redux';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  const dispatch = useDispatch();
+
 
   const handleLogin = () => {
     firebase.auth
     .signInWithEmailAndPassword(email,password)
     .then(userCredentials => {
       //login is success
+      const action = {
+        type: 'login-success',
+        payload: {email,password}
+      }
+      dispatch(action);
+      
     })
     .catch(error => {
       alert(error.message);
@@ -87,10 +97,11 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#f9fafd",
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    paddingTop: 50,
   },
   logo: {
     height: 110,
