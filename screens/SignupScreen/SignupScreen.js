@@ -99,11 +99,11 @@ export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f9fafd",
-    flex: 1,
     justifyContent: "center",
+    flex: 1,
     alignItems: "center",
     padding: 20,
+    backgroundColor: "#f9fafd",
   },
   text: {
     fontSize: 28,
