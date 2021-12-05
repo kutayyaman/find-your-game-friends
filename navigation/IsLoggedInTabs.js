@@ -1,18 +1,61 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AddPostScreen from "../components/AddPostScreen/AddPostScreen";
+import {createStackNavigator} from '@react-navigation/stack';
+import AddPostScreen from "../screens/AddPostScreen/AddPostScreen";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
-import LoginScreen from "../screens/LoginScreen/LoginScreen";
-import SignupScreen from "../screens/SignupScreen/SignupScreen";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import ActionButton from "react-native-action-button";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import LogoutButton from "../components/LogoutButton";
+import TabMenuActionButton from "../components/TabMenuActionButton";
 
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const HomeStack = ({navigation}) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        title: '',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#fff',
+          shadowColor: '#fff',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft: 15}}>
+            <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+          </View>
+        ),
+      }}
+    />
+    <Stack.Screen
+      name="AddPost"
+      component={AddPostScreen}
+      options={{
+        title: '',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#2e64e515',
+          shadowColor: '#2e64e515',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft: 15}}>
+            <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+          </View>
+        ),
+      }}
+    />
+  </Stack.Navigator>
+);
+
 const IsLoggedInTabs = () => {
+  
   return (
     <Tab.Navigator
       screenOptions={{
@@ -22,13 +65,13 @@ const IsLoggedInTabs = () => {
         ),
         tabBarStyle: {
           position: "absolute",
-          bottom: 8,
+          bottom: 2,
           left: 8,
           right: 8,
           elevation: 0,
           backgroundColor: "#ffffff",
           borderRadius: 15,
-          height: 80,
+          height: 70,
           ...styles.shadow,
         },
       }}
@@ -39,7 +82,7 @@ const IsLoggedInTabs = () => {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -103,24 +146,7 @@ const IsLoggedInTabs = () => {
                 top: -84,
               }}
             >
-              <ActionButton buttonColor="rgba(231,76,60,1)">
-                <ActionButton.Item
-                  buttonColor="#9b59b6"
-                  title="Find Game Friends"
-                  onPress={() => alert("Find Game Friends Tapped!")}
-                >
-                  <Ionicons name="people-circle-outline" size={25} />
-                </ActionButton.Item>
-                <ActionButton.Item
-                  buttonColor="#3498db"
-                  title="Send A Post"
-                  onPress={() => {
-                    alert("Send A Post tapped");
-                  }}
-                >
-                  <Ionicons name="send-outline" size={25} />
-                </ActionButton.Item>
-              </ActionButton>
+              <TabMenuActionButton/>
             </View>
           ),
         }}

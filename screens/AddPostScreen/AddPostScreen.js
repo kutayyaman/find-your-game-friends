@@ -4,7 +4,6 @@ import { InputField, InputWrapper } from "../../styles/AddPost";
 import ActionButton from "react-native-action-button";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-
 const AddPostScreen = () => {
   return (
     <View style={styles.container}>
@@ -15,22 +14,9 @@ const AddPostScreen = () => {
           numberOfLines={4}
         />
       </InputWrapper>
-      <ActionButton buttonColor="rgba(231,76,60,1)">
-        <ActionButton.Item
-          buttonColor="#9b59b6"
-          title="Take Photo"
-          onPress={() => alert("Photo tapped!")}
-        >
-          <Ionicons name="camera-outline" size={25} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor="#3498db"
-          title="Choose Photo"
-          onPress={() => {alert("Choose photo tapped")}}
-        >
-          <Ionicons name="md-images-outline" size={25} />
-        </ActionButton.Item>
-      </ActionButton>
+      <ActionButton onPress={()=>{alert("send post is clicked")}} style={styles.actionButton} buttonColor="#3C00E1">
+        
+    </ActionButton>
     </View>
   );
 };
@@ -48,4 +34,7 @@ const styles = StyleSheet.create({
     height: 22,
     color: "white",
   },
+  actionButton: {
+    marginBottom: 50
+  }
 });

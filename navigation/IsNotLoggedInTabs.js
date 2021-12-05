@@ -13,13 +13,13 @@ const IsNotLoggedInTabs = () => {
       screenOptions={{
         tabBarStyle: {
           position: "absolute",
-          bottom: 8,
+          bottom: 2,
           left: 8,
           right: 8,
           elevation: 0,
           backgroundColor: "#ffffff",
           borderRadius: 15,
-          height: 80,
+          height: 70,
           ...styles.shadow,
         },
       }}
