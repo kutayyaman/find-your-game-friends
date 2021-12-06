@@ -12,14 +12,13 @@ const LoginScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-
   const handleLogin = () => {
     firebase.auth
     .signInWithEmailAndPassword(email,password)
     .then(userCredentials => {
       //login is success
-      dispatch(loginSuccess({email,password}));
-      
+      const displayName = userCredentials.user.displayName;
+      dispatch(loginSuccess({email,password,displayName}));
     })
     .catch(error => {
       alert(error.message);
@@ -29,6 +28,7 @@ const LoginScreen = ({ navigation }) => {
   useEffect(()=>{
     const unsubscribe = firebase.auth.onAuthStateChanged(user => {
       if(user){
+
         navigation.replace("Home");
       }
 

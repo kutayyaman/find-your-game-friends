@@ -1,31 +1,49 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
+import { Subheading } from "react-native-paper";
 import FormButton from "../../components/LoginScreenComponents/FormButton";
 import FormInput from "../../components/LoginScreenComponents/FormInput";
 import SocialButton from "../../components/LoginScreenComponents/SocialButton";
 import firebase from "../../database/firebase";
 
 const SignupScreen = ({ navigation }) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
 
-  const handleSignUp = () => {
-    firebase.auth
-    .createUserWithEmailAndPassword(email,password)
-    .then(userCredentials => {
-      const user = userCredentials.user;
+  const handleSignUp = async () => {
+    setIsLoading(true);
+    try {
+      const response = await firebase.auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await response.user.updateProfile({ displayName: name });
+      const user = response.user;
       alert("You have successfully signed up");
-    })
-    .catch(error => {
-      alert(error.message);
-    })
-  }
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      alert(e.message);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Create an account</Text>
+      <FormInput
+        labelValue={name}
+        onChangeText={(userName) => setName(userName)}
+        placeholderText="Name"
+        iconType="user"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+
       <FormInput
         labelValue={email}
         onChangeText={(userEmail) => setEmail(userEmail)}
@@ -46,16 +64,15 @@ const SignupScreen = ({ navigation }) => {
 
       <FormInput
         labelValue={confirmPassword}
-        onChangeText={(userConfirmPassword) => setConfirmPassword(confirmPassword)}
+        onChangeText={(userConfirmPassword) =>
+          setConfirmPassword(confirmPassword)
+        }
         placeholderText="Confirm Password"
         iconType="lock"
         secureTextEntry={true}
       />
 
-      <FormButton
-        buttonTitle="Sign Up"
-        onPress={handleSignUp}
-      />
+      <FormButton buttonTitle="Sign Up" onPress={handleSignUp} />
 
       <View style={styles.textPrivate}>
         <Text style={styles.color_textPrivate}>
@@ -73,24 +90,6 @@ const SignupScreen = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-
-      {/*<SocialButton
-        buttonTitle="Sign In with Facebook"
-        btnType="facebook"
-        color="#4867aa"
-        backgroundColor="#e6eaf4"
-        onPress={() => {
-          
-        }}
-      />
-
-      <SocialButton
-        buttonTitle="Sign In with Google"
-        btnType="google"
-        color="#d34d41"
-        backgroundColor="#f5e7ea"
-        onPress={() => {}}
-      />*/}
     </View>
   );
 };
