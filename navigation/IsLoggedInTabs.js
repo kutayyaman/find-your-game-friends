@@ -7,6 +7,10 @@ import { StyleSheet, Text, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import LogoutButton from "../components/LogoutButton";
 import TabMenuActionButton from "../components/TabMenuActionButton";
+import ChatScreen from "../screens/ChatScreen/ChatScreen";
+import { Provider } from "react-native-paper";
+import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
+import ChatDetailScreen from "../screens/ChatDetailScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,9 +58,54 @@ const HomeStack = ({navigation}) => (
   </Stack.Navigator>
 );
 
+const ChatStack = ({navigation}) => (
+  <Stack.Navigator>
+    <Tab.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{
+          headerShown:false,
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                top: 10,
+              }}
+            >
+              <Ionicons
+                name="chatbox-outline"
+                size={focused ? 35 : 25}
+                style={{
+                  color: focused ? "#e32f45" : "#748c93",
+                }}
+              />
+              <Text>Chat</Text>
+            </View>
+          ),
+        }}
+      />
+    <Stack.Screen
+      name="ChatDetail"
+      component={ChatDetailScreen}
+      options={{
+        title: '',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#2e64e515',
+          shadowColor: '#2e64e515',
+          elevation: 0,
+        },
+        headerShown:false,
+      }}
+    />
+  </Stack.Navigator>
+);
+
 const IsLoggedInTabs = () => {
   
   return (
+    <Provider>
     <Tab.Navigator
       screenOptions={{
         showLabel:false,
@@ -153,7 +202,7 @@ const IsLoggedInTabs = () => {
       />
       <Tab.Screen
         name="Chat"
-        component={HomeScreen}
+        component={ChatStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -176,8 +225,8 @@ const IsLoggedInTabs = () => {
         }}
       />
       <Tab.Screen
-        name="ItWillDelete"
-        component={HomeScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -200,6 +249,7 @@ const IsLoggedInTabs = () => {
         }}
       />
     </Tab.Navigator>
+    </Provider>
   );
 };
 
