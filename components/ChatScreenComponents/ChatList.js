@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { List, Avatar, Divider } from "react-native-paper";
@@ -7,6 +8,7 @@ import firebase from "../../database/firebase";
 const ChatList = (props) => {
   const { email } = props;
   const [chats, setChats] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (email) {
@@ -26,8 +28,9 @@ const ChatList = (props) => {
         <React.Fragment>
           <List.Item
             title={chat.data().users.find((x) => x != email)}
-            description="En son mesaj"
+            description={chat.data().messages[0].text}
             left={() => <Avatar.Text label={chat.data().users.find((x) => x != email).split(' ').reduce((prev,current)=>prev+current[0],"")} size={54} />}
+            onPress={()=>{navigation.navigate('ChatDetail',{chatId: chat.id})}}
           />
           <Divider style={{ backgroundColor: "black" }} />
         </React.Fragment>

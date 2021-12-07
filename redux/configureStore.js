@@ -25,7 +25,8 @@ const configureStore = () => {
     mail: undefined,
     password: undefined,
     image: undefined,
-    displayName: undefined
+    displayName: undefined,
+    uid: undefined
   });
 
   getValueFor("auth").then((authData)=>{

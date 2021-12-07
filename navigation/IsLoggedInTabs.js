@@ -8,13 +8,21 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import LogoutButton from "../components/LogoutButton";
 import TabMenuActionButton from "../components/TabMenuActionButton";
 import ChatScreen from "../screens/ChatScreen/ChatScreen";
-import { Provider } from "react-native-paper";
+import { Provider, DefaultTheme } from "react-native-paper";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import ChatDetailScreen from "../screens/ChatDetailScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#ab47bc',
+    accent: '#00e676',
+  },
+};
 const HomeStack = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
@@ -97,6 +105,9 @@ const ChatStack = ({navigation}) => (
           elevation: 0,
         },
         headerShown:false,
+        cardStyle:{
+          marginBottom:70
+        }
       }}
     />
   </Stack.Navigator>
@@ -105,7 +116,7 @@ const ChatStack = ({navigation}) => (
 const IsLoggedInTabs = () => {
   
   return (
-    <Provider>
+    <Provider theme={theme}>
     <Tab.Navigator
       screenOptions={{
         showLabel:false,
@@ -151,6 +162,7 @@ const IsLoggedInTabs = () => {
               <Text>Home</Text>
             </View>
           ),
+          
         }}
       />
       <Tab.Screen
@@ -252,7 +264,6 @@ const IsLoggedInTabs = () => {
     </Provider>
   );
 };
-
 export default IsLoggedInTabs;
 
 const styles = StyleSheet.create({

@@ -16,26 +16,29 @@ import { useNavigation } from "@react-navigation/core";
 const ChatScreen = () => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [otherUserEmail, setOtherUserEmail] = useState(undefined);
-  const[isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { email } = useSelector((store) => store);
   const navigation = useNavigation();
 
   const createChat = async () => {
     if (email) {
-        setIsLoading(true);
-        await firebase.firebase
+      setIsLoading(true);
+      const response = await firebase.firebase
         .firestore()
         .collection("chats")
         .add({
           users: [email, otherUserEmail],
         });
-        setIsLoading(false);
+      setIsLoading(false);
+      setIsDialogVisible(false);
+      setOtherUserEmail(undefined);
+      navigation.navigate("ChatDetail", { chatId: response.id });
     }
   };
   return (
     <View style={{ flex: 1 }}>
-      <ChatList email={email}/>
+      <ChatList email={email} />
 
       <Portal>
         <Dialog
@@ -63,9 +66,6 @@ const ChatScreen = () => {
             <Button
               onPress={() => {
                 createChat();
-                setIsDialogVisible(false);
-                setOtherUserEmail(undefined);
-                navigation.navigate("ChatDetail")
               }}
               isLoading={isLoading}
             >
