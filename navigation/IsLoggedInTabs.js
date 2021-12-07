@@ -120,9 +120,9 @@ const IsLoggedInTabs = () => {
     <Tab.Navigator
       screenOptions={{
         showLabel:false,
-        headerRight: () => (
+        /*headerRight: () => (
           <LogoutButton/>
-        ),
+        ),*/
         tabBarStyle: {
           position: "absolute",
           bottom: 2,

@@ -28,7 +28,7 @@ const ChatList = (props) => {
         <React.Fragment>
           <List.Item
             title={chat.data().users.find((x) => x != email)}
-            description={chat.data().messages[0].text}
+            description={chat.data()?.messages && chat.data()?.messages[0]?.text}
             left={() => <Avatar.Text label={chat.data().users.find((x) => x != email).split(' ').reduce((prev,current)=>prev+current[0],"")} size={54} />}
             onPress={()=>{navigation.navigate('ChatDetail',{chatId: chat.id})}}
           />

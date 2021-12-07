@@ -8,7 +8,7 @@ import * as SecureStoreNew from 'expo-secure-store';
 
 
 async function save(key, value) {
-  await SecureStoreNew.setItemAsync(key, value);
+  await SecureStoreNew.setItemAsync(key, JSON.stringify(value));
 }
 
 async function getValueFor(key) {
