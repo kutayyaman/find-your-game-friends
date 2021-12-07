@@ -13,12 +13,12 @@ const ProfileScreen = () => {
         };
       });
     
-      const { email,displayName } = reduxState.store;
+      const { email,displayName,uid } = reduxState.store;
     return (
         <View style={{flex:1, alignItems:"center", justifyContent:"flex-start"}}>
             <Avatar.Text label={displayName && displayName.split(" ").reduce((prev,current)=> prev + current[0],"")}/>
             <Title>{displayName}</Title>
-            <Subheading>{email}</Subheading>
+            <Subheading>{email} : uid {uid}</Subheading>
             <View>
             <Button>Sign Out</Button>
             <LogoutButton/>

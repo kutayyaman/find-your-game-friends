@@ -18,7 +18,8 @@ const LoginScreen = ({ navigation }) => {
     .then(userCredentials => {
       //login is success
       const displayName = userCredentials.user.displayName;
-      dispatch(loginSuccess({email,password,displayName}));
+      const uid = userCredentials.user.uid;
+      dispatch(loginSuccess({email,password,displayName,uid}));
     })
     .catch(error => {
       alert(error.message);
