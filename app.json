@@ -2,7 +2,8 @@
   "expo": {
     "name": "find-your-game-friends",
     "slug": "find-your-game-friends",
-    "version": "1.0.0",
+    "version": "1.1.0",
+    "privacy": "public",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

@@ -24,7 +24,7 @@ const IsNotLoggedInTabs = () => {
         },
       }}
       tabBarOptions={{
-        showLabel: false,
+        showLabel: true,
       }}
     >
       <Tab.Screen
