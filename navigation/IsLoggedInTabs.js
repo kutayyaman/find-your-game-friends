@@ -136,7 +136,7 @@ const IsLoggedInTabs = () => {
         },
       }}
       tabBarOptions={{
-        showLabel: true,
+        showLabel: false,
       }}
       
     >
