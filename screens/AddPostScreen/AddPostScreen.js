@@ -1,23 +1,86 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { InputField, InputWrapper } from "../../styles/AddPost";
-import ActionButton from "react-native-action-button";
+import React, { useEffect, useRef, useState } from "react";
+import { StyleSheet, Text, View, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
 
 const AddPostScreen = () => {
+  const [image, setImage] = useState(null);
+  const [useCamera, setUseCamera] = useState(false);
+  const cameraRef = useRef(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+    })();
+  }, []);
+
+  const takePicture = async () => {
+    if (cameraRef) {
+      console.log('in take picture');
+      try {
+        let photo = await cameraRef.current.takePictureAsync({
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+        return photo;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      return result;
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <InputWrapper>
-        <InputField
-          placeholder="What's on your mind?"
-          multiline
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity>
+          <Ionicons
+            name="arrow-back-outline"
+            size={24}
+            color="#D8D9DB"
+          ></Ionicons>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={{ fontWeight: "500" }}>Post</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Image
+          source={require("../../assets/background/bg.jpg")}
+          style={styles.avatar}
+        ></Image>
+        <TextInput
+          autoFocus={true}
+          //multiline={true}
           numberOfLines={4}
-        />
-      </InputWrapper>
-      <ActionButton onPress={()=>{alert("send post is clicked")}} style={styles.actionButton} buttonColor="#3C00E1">
-        
-    </ActionButton>
-    </View>
+          style={{ flex: 1 }}
+          placeholder="Want to share something?"
+        ></TextInput>
+      </View>
+
+      <TouchableOpacity style={styles.photo} onPress={takePicture}>
+        <Ionicons name="camera-outline" size={24}></Ionicons>
+        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };
 
@@ -26,15 +89,28 @@ export default AddPostScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    height: 48,
   },
-  actionButtonIcon: {
-    fontSize: 20,
-    height: 22,
-    color: "white",
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 32,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#D8D9DB",
   },
-  actionButton: {
-    marginBottom: 50
-  }
+  inputContainer: {
+    margin: 32,
+    flexDirection: "row",
+  },
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    marginRight: 16,
+  },
+  photo: {
+    alignItems: "flex-end",
+    marginHorizontal: 32,
+  },
 });

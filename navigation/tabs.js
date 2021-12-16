@@ -11,7 +11,7 @@ const Tabs = () => {
   const reduxState = useSelector((store) => {
     //redux store'daki bilgileri cekiyoruz
     return {
-      isLoggedIn: store.isLoggedIn,
+      isLoggedIn: store.isLoggedIn
     };
   });
 

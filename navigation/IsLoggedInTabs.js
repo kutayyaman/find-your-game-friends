@@ -11,6 +11,7 @@ import ChatScreen from "../screens/ChatScreen/ChatScreen";
 import { Provider, DefaultTheme } from "react-native-paper";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import ChatDetailScreen from "../screens/ChatDetailScreen";
+import AddPostScreenV2 from "../screens/AddPostScreen/AddPostScreenV2";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -119,6 +120,7 @@ const IsLoggedInTabs = () => {
     <Provider theme={theme}>
     <Tab.Navigator
       screenOptions={{
+        headerShown:false,
         showLabel:false,
         /*headerRight: () => (
           <LogoutButton/>
@@ -197,7 +199,7 @@ const IsLoggedInTabs = () => {
           },
         }}
         name="AddPostScreen"
-        component={AddPostScreen}
+        component={AddPostScreenV2}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
