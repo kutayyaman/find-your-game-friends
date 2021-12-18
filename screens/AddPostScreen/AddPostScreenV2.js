@@ -5,6 +5,9 @@ import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { TextInput } from "react-native-gesture-handler";
+import { Paragraph } from "react-native-paper";
+import ChooseOneDialog from "../../components/ChooseOneDialog";
+import LoadPhotoDialog from "../../components/AddPostScreenV2Components/LoadPhotoDialog";
 
 export default function AddPostScreenV2() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -12,6 +15,7 @@ export default function AddPostScreenV2() {
   const [useCamera, setUseCamera] = useState(false);
   const cameraRef = useRef(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const cameraDialogRef = useRef();
 
   useEffect(() => {
     (async () => {
@@ -99,7 +103,8 @@ export default function AddPostScreenV2() {
                   if (!r.cancelled) {
                     setImage(r.uri);
                   }
-                  console.log("response", JSON.stringify(r));
+                  /*alert(JSON.stringify(r));
+                  console.log("response", JSON.stringify(r));*/
                 }}
               >
                 <Text style={styles.text}>PICTURE</Text>
@@ -138,47 +143,23 @@ export default function AddPostScreenV2() {
                   placeholder="Want to share something?"
                 ></TextInput>
               </View>
-
-              <TouchableOpacity style={styles.photo} onPress={takePicture}>
-                {image && (
-                  <Image
-                    source={{ uri: image }}
-                    style={{ width: "100%", height: 200 }}
-                  />
-                )}
+              {image && (
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: "100%", height: 200 }}
+                />
+              )}
+              <TouchableOpacity
+                style={styles.photo}
+                onPress={() => {
+                  cameraDialogRef.current.showDialog();
+                }}
+              >
                 <Ionicons name="camera-outline" size={24}></Ionicons>
               </TouchableOpacity>
             </SafeAreaView>
             {/**BURA */}
-            <View
-              style={{
-                marginBottom: 100,
-                flexDirection: "row",
-              }}
-            >
-              <TouchableOpacity
-                style={[styles.button]}
-                onPress={async () => {
-                  console.log("in pick photo");
-                  const r = await pickImage();
-                  if (!r.cancelled) {
-                    setImage(r.uri);
-                  }
-                  console.log("response", JSON.stringify(r));
-                }}
-              >
-                <Text style={styles.text}> PICK PICTURE </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button]}
-                onPress={async () => {
-                  console.log("in pick camera");
-                  setUseCamera(true);
-                }}
-              >
-                <Text style={styles.text}> PICK CAMERA </Text>
-              </TouchableOpacity>
-            </View>
+            <LoadPhotoDialog cameraDialogRef={cameraDialogRef} setUseCamera={setUseCamera}/>
           </View>
         </>
       )}
