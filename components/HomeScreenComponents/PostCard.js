@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useSelector } from "react-redux";
 import {
   Container,
   Card,
@@ -15,48 +16,74 @@ import {
   InteractionText,
   Divider,
 } from "../../styles/FeedStyles";
+import firebase from "../../database/firebase";
+import { useNavigation } from "@react-navigation/core";
+import { timeDifference } from "../../utils/timeDiffrence";
+
 const PostCard = ({ item }) => {
+  const [chatId,setChatId] = useState(null);
+  const navigation = useNavigation();
 
-  let likeIcon = item.liked ? "heart" : "heart-outline";
-  let likeIconColor = item.liked ? "#2e64e5" : "#333";
-  
-  if (item.likes == 1) {
-    var likeText = "1 Like";
-  } else if (item.likes > 1) {
-    var likeText = item.likes + " Likes";
-  } else {
-    var likeText = "Like";
-  }
+  const reduxState = useSelector((store) => {
+    //redux store'daki bilgileri cekiyoruz
+    return {
+      store,
+    };
+  });
 
-  if (item.comments == 1) {
-    var commentText = "1 Comment";
-  } else if (item.comments > 1) {
-    var commentText = item.likes + " Comments";
-  } else {
-    var commentText = "Comment";
-  }
+  const { email, displayName, uid } = reduxState.store;
 
+const calculateTimeDifference = (isostring)=>{
+  let dateOfPost = new Date(isostring);
+  return timeDifference(new Date(),dateOfPost);
+}
+  /*const getChat =  () => {
+      firebase.firebase
+        .firestore()
+        .collection("chats")
+        .where("users", "in",  [['yaman', 'kutay']])
+        .onSnapshot( (querySnapshot) => {
+          querySnapshot.forEach((doc)=>{
+              alert(doc.id);
+              setChatId(doc.id);
+          })
+        });
+        
+  };
+  const createChat = async () => {
+      const response = await firebase.firebase
+              .firestore()
+              .collection("chats")
+              .add({
+                users: ["yaman", "kutay"],
+              });
+            navigation.navigate("ChatDetail", { chatId: response.id });
+  }*/
   return (
     <Card>
       <UserInfo>
-        <UserImg source={item.userImg} />
         <UserInfoText>
-          <UserName>{item.userName}</UserName>
-          <PostTime>{item.postTime}</PostTime>
+          <UserName>{item.data()?.displayName}({item.data()?.email})</UserName>
+          <PostTime>{calculateTimeDifference(item.data()?.date)}</PostTime>
         </UserInfoText>
       </UserInfo>
-      <PostText>{item.post}</PostText>
-      {item.postImg != "none" ? <PostImg source={item.postImg} /> : <Divider />}
-      <InteractionWrapper>
-        <Interaction active={item.liked}>
-          <Ionicons name={likeIcon} size={25} color={likeIconColor} />
-          <InteractionText active={item.liked}>{likeText}</InteractionText>
+      <PostText>{item.data()?.postText}</PostText>
+      {/*<InteractionWrapper>
+        <Interaction onPress={()=>{
+          getChat();
+          if(chatId){
+            alert(JSON.stringify(chatId));
+            navigation.navigate("ChatDetail", { chatId: chatId });
+          }else{
+            createChat();
+          }
+          }}>
+          <Ionicons name="chatbox-ellipses-outline" size={25}/>
+          <InteractionText>Send Message</InteractionText>
         </Interaction>
-        <Interaction>
-          <Ionicons name="md-chatbubble-outline" size={25} />
-          <InteractionText>{commentText}</InteractionText>
-        </Interaction>
-      </InteractionWrapper>
+        </InteractionWrapper>*/}
+      <Divider />
+
     </Card>
   );
 };
