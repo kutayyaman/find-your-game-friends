@@ -28,40 +28,12 @@ const HomeStack = ({navigation}) => (
     <Stack.Screen
       name="Home"
       component={HomeScreen}
-      options={{
-        title: '',
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: '#fff',
-          shadowColor: '#fff',
-          elevation: 0,
-        },
-        headerBackTitleVisible: false,
-        headerBackImage: () => (
-          <View style={{marginLeft: 15}}>
-            <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-          </View>
-        ),
-      }}
+      
     />
     <Stack.Screen
       name="AddPost"
       component={AddPostScreen}
-      options={{
-        title: '',
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: '#2e64e515',
-          shadowColor: '#2e64e515',
-          elevation: 0,
-        },
-        headerBackTitleVisible: false,
-        headerBackImage: () => (
-          <View style={{marginLeft: 15}}>
-            <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-          </View>
-        ),
-      }}
+      
     />
     <Stack.Screen
       name="ChatDetail"
@@ -88,27 +60,7 @@ const ChatStack = ({navigation}) => (
     <Tab.Screen
         name="Chat"
         component={ChatScreen}
-        options={{
-          headerShown:false,
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                top: 10,
-              }}
-            >
-              <Ionicons
-                name="chatbox-outline"
-                size={focused ? 35 : 25}
-                style={{
-                  color: focused ? "#e32f45" : "#748c93",
-                }}
-              />
-              <Text>Chat</Text>
-            </View>
-          ),
-        }}
+        
       />
     <Stack.Screen
       name="ChatDetail"
@@ -136,7 +88,7 @@ const IsLoggedInTabs = () => {
     <Provider theme={theme}>
     <Tab.Navigator
       screenOptions={{
-        headerShown:false,
+        headerShown:true,
         showLabel:false,
         /*headerRight: () => (
           <LogoutButton/>
@@ -162,6 +114,7 @@ const IsLoggedInTabs = () => {
         name="Home"
         component={HomeStack}
         options={{
+          headerShown:false,
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -184,12 +137,7 @@ const IsLoggedInTabs = () => {
         }}
       />
       <Tab.Screen
-        listeners={{
-          tabPress: (e) => {
-            // this button will not open any component or page
-            e.preventDefault();
-          },
-        }}
+        
         name="AddPostScreen"
         component={AddPostScreen}
         options={{
@@ -198,10 +146,17 @@ const IsLoggedInTabs = () => {
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                top: -84,
+                top: 10,
               }}
             >
-              <TabMenuActionButton/>
+              <Ionicons
+                name="send-outline"
+                size={focused ? 35 : 25}
+                style={{
+                  color: focused ? "#e32f45" : "#748c93",
+                }}
+              />
+              <Text>Post</Text>
             </View>
           ),
         }}

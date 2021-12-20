@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Text, TouchableOpacity } from "react-native";
 import firebase from "../../database/firebase";
 import { FlatList } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import PostCard from "../../components/HomeScreenComponents/PostCard";
 import {
   Container,
