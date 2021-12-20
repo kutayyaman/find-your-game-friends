@@ -57,7 +57,7 @@ const HomeStack = ({navigation}) => (
 
 const ChatStack = ({navigation}) => (
   <Stack.Navigator>
-    <Tab.Screen
+    <Stack.Screen
         name="Chat"
         component={ChatScreen}
         
@@ -88,7 +88,7 @@ const IsLoggedInTabs = () => {
     <Provider theme={theme}>
     <Tab.Navigator
       screenOptions={{
-        headerShown:true,
+        headerShown:false,
         showLabel:false,
         /*headerRight: () => (
           <LogoutButton/>
@@ -141,6 +141,7 @@ const IsLoggedInTabs = () => {
         name="AddPostScreen"
         component={AddPostScreen}
         options={{
+          headerShown:true,
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -189,6 +190,7 @@ const IsLoggedInTabs = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerShown:true,
           tabBarIcon: ({ focused }) => (
             <View
               style={{
