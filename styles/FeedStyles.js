@@ -18,6 +18,8 @@ export const UserInfo = styled.View`
   flex-direction: row;
   justify-content: flex-start;
   padding: 8px;
+  width: 300;
+  height: 60;
 `;
 
 export const UserImg = styled.Image`

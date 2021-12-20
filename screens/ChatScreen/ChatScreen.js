@@ -37,7 +37,7 @@ const ChatScreen = () => {
     }
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop:20 }}>
       <ChatList email={email} />
 
       <Portal>

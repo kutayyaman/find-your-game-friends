@@ -11,7 +11,6 @@ import ChatScreen from "../screens/ChatScreen/ChatScreen";
 import { Provider, DefaultTheme } from "react-native-paper";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import ChatDetailScreen from "../screens/ChatDetailScreen";
-import AddPostScreenV2 from "../screens/AddPostScreen/AddPostScreenV2";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,6 +61,23 @@ const HomeStack = ({navigation}) => (
             <Ionicons name="arrow-back" size={25} color="#2e64e5" />
           </View>
         ),
+      }}
+    />
+    <Stack.Screen
+      name="ChatDetail"
+      component={ChatDetailScreen}
+      options={{
+        title: '',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#2e64e515',
+          shadowColor: '#2e64e515',
+          elevation: 0,
+        },
+        headerShown:false,
+        cardStyle:{
+          marginBottom:70
+        }
       }}
     />
   </Stack.Navigator>
@@ -168,30 +184,6 @@ const IsLoggedInTabs = () => {
         }}
       />
       <Tab.Screen
-        name="Global"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                top: 10,
-              }}
-            >
-              <Ionicons
-                name="earth-outline"
-                size={focused ? 35 : 25}
-                style={{
-                  color: focused ? "#e32f45" : "#748c93",
-                }}
-              />
-              <Text>Global</Text>
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
         listeners={{
           tabPress: (e) => {
             // this button will not open any component or page
@@ -199,7 +191,7 @@ const IsLoggedInTabs = () => {
           },
         }}
         name="AddPostScreen"
-        component={AddPostScreenV2}
+        component={AddPostScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
