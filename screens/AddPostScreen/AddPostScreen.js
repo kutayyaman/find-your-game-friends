@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { StyleSheet, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import firebase from "../../database/firebase";
 import { useSelector } from "react-redux";
-import { TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 
 const AddPostScreen = () => {
   const [postText, setPostText] = useState(undefined);
@@ -44,23 +43,6 @@ const AddPostScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => {}}>
-          <Ionicons
-            name="arrow-back-outline"
-            size={24}
-            color="#D8D9DB"
-          ></Ionicons>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            createPost();
-          }}
-        >
-          <Text style={{ fontWeight: "500" }}>Post</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.inputContainer}>
         <Image
           source={require("../../assets/background/bg.jpg")}
@@ -73,6 +55,11 @@ const AddPostScreen = () => {
           value={postText}
           onChangeText={(text) => setPostText(text)}
         />
+      </View>
+      <View style={{flex:1,alignItems:'center'}}>
+        <TouchableOpacity onPress={createPost}>
+          <Button>Post</Button>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
