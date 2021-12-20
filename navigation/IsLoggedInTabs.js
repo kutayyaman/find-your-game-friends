@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import AddPostScreen from "../screens/AddPostScreen/AddPostScreen";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import { StyleSheet, Text, View } from "react-native";
@@ -11,85 +12,75 @@ import ChatScreen from "../screens/ChatScreen/ChatScreen";
 import { Provider, DefaultTheme } from "react-native-paper";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import ChatDetailScreen from "../screens/ChatDetailScreen";
+import "react-native-gesture-handler";
+import DrawerContent from "./DrawerContent";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
 const theme = {
   ...DefaultTheme,
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#ab47bc',
-    accent: '#00e676',
+    primary: "#ab47bc",
+    accent: "#00e676",
   },
 };
-const HomeStack = ({navigation}) => (
+const HomeStack = ({ navigation }) => (
   <Stack.Navigator>
-    <Stack.Screen
-      name="Home"
-      component={HomeScreen}
-      
-    />
-    <Stack.Screen
-      name="AddPost"
-      component={AddPostScreen}
-      
-    />
+    <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Screen name="AddPost" component={AddPostScreen} />
     <Stack.Screen
       name="ChatDetail"
       component={ChatDetailScreen}
       options={{
-        title: '',
-        headerTitleAlign: 'center',
+        title: "",
+        headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: '#2e64e515',
-          shadowColor: '#2e64e515',
+          backgroundColor: "#2e64e515",
+          shadowColor: "#2e64e515",
           elevation: 0,
         },
-        headerShown:false,
-        cardStyle:{
-          marginBottom:70
-        }
+        headerShown: false,
+        cardStyle: {
+          marginBottom: 70,
+        },
       }}
     />
   </Stack.Navigator>
 );
 
-const ChatStack = ({navigation}) => (
+const ChatStack = ({ navigation }) => (
   <Stack.Navigator>
-    <Stack.Screen
-        name="Chat"
-        component={ChatScreen}
-        
-      />
+    <Stack.Screen name="Chat" component={ChatScreen} />
     <Stack.Screen
       name="ChatDetail"
       component={ChatDetailScreen}
       options={{
-        title: '',
-        headerTitleAlign: 'center',
+        title: "",
+        headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: '#2e64e515',
-          shadowColor: '#2e64e515',
+          backgroundColor: "#2e64e515",
+          shadowColor: "#2e64e515",
           elevation: 0,
         },
-        headerShown:false,
-        cardStyle:{
-          marginBottom:70
-        }
+        headerShown: false,
+        cardStyle: {
+          marginBottom: 70,
+        },
       }}
     />
   </Stack.Navigator>
 );
 
-const IsLoggedInTabs = () => {
-  
+const TabNavigator = () => {
   return (
-    <Provider theme={theme}>
     <Tab.Navigator
       screenOptions={{
-        headerShown:false,
-        showLabel:false,
+        headerShown: false,
+        showLabel: false,
         /*headerRight: () => (
           <LogoutButton/>
         ),*/
@@ -108,13 +99,12 @@ const IsLoggedInTabs = () => {
       tabBarOptions={{
         showLabel: false,
       }}
-      
     >
       <Tab.Screen
         name="Home"
         component={HomeStack}
         options={{
-          headerShown:false,
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -133,15 +123,13 @@ const IsLoggedInTabs = () => {
               <Text>Home</Text>
             </View>
           ),
-          
         }}
       />
       <Tab.Screen
-        
         name="AddPostScreen"
         component={AddPostScreen}
         options={{
-          headerShown:true,
+          headerShown: true,
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -190,7 +178,7 @@ const IsLoggedInTabs = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          headerShown:true,
+          headerShown: true,
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -212,6 +200,21 @@ const IsLoggedInTabs = () => {
         }}
       />
     </Tab.Navigator>
+  );
+};
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator drawerContent={(props) => DrawerContent(props)}>
+      <Drawer.Screen name="Home" component={HomeStack}></Drawer.Screen>
+    </Drawer.Navigator>
+  );
+};
+
+const IsLoggedInTabs = () => {
+  return (
+    <Provider theme={theme}>
+      <TabNavigator/>
     </Provider>
   );
 };
