@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity } from "react-native";
 import firebase from "../../database/firebase";
 import { FlatList } from "react-native";
@@ -32,57 +32,29 @@ const Posts = [
     likes: "8",
     comments: "0",
   },
-  {
-    id: "3",
-    userName: "Ken William",
-    userImg: require("../../assets/background/bg.jpg"),
-    postTime: "1 hours ago",
-    post: "Hey there, this is my test for a post of my social app in React Native.",
-    postImg: require("../../assets/gaming/gaming2.jpg"),
-    liked: true,
-    likes: "1",
-    comments: "0",
-  },
-  {
-    id: "4",
-    userName: "Selina Paul",
-    userImg: require("../../assets/background/bg.jpg"),
-    postTime: "1 day ago",
-    post: "Hey there, this is my test for a post of my social app in React Native.",
-    postImg: require("../../assets/gaming/gaming3.jpg"),
-    liked: true,
-    likes: "22",
-    comments: "1",
-  },
-  {
-    id: "5",
-    userName: "Christy Alex",
-    userImg: require("../../assets/background/bg.jpg"),
-    postTime: "2 days ago",
-    post: "Hey there, this is my test for a post of my social app in React Native.",
-    postImg: "none",
-    liked: false,
-    likes: "0",
-    comments: "0",
-  },
 ];
 
 const HomeScreen = ({ navigation }) => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+      return firebase.firebase
+        .firestore()
+        .collection("posts")
+        .orderBy("date", "desc")
+        .onSnapshot((querySnapshot) => {
+          setPosts(querySnapshot.docs);
+        });
+  }, []);
+
   return (
-    <Container>
+    <Container style={{ marginBottom:60}}>
       <FlatList
-        data={Posts}
+        data={posts}
         renderItem={({item}) => <PostCard item={item}/>}
         keyExtractor={item=>item.id}
         showsVerticalScrollIndicator={false}
       />
-      <TouchableOpacity
-        onPress={()=>{
-          navigation.navigate("AddPostScreen")
-        }}
-      >
-        <Text>Press Here</Text>
-      </TouchableOpacity>
     </Container>
   );
 };

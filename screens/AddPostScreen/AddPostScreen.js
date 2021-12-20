@@ -1,63 +1,62 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { Camera } from 'expo-camera';
-import * as ImagePicker from 'expo-image-picker';
+import { TouchableOpacity } from "react-native-gesture-handler";
+import firebase from "../../database/firebase";
+import { useSelector } from "react-redux";
+import { TextInput } from "react-native-paper";
 
 const AddPostScreen = () => {
-  const [image, setImage] = useState(null);
-  const [useCamera, setUseCamera] = useState(false);
-  const cameraRef = useRef(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [postText, setPostText] = useState(undefined);
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-    })();
-  }, []);
+  const reduxState = useSelector((store) => {
+    //redux store'daki bilgileri cekiyoruz
+    return {
+      store,
+    };
+  });
 
-  const takePicture = async () => {
-    if (cameraRef) {
-      console.log('in take picture');
+  const { email, displayName, uid } = reduxState.store;
+
+  const createPost = async () => {
+    if (postText) {
+      const date = new Date().toISOString();
       try {
-        let photo = await cameraRef.current.takePictureAsync({
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-        });
-        return photo;
-      } catch (e) {
-        console.log(e);
+        const response = await firebase.firebase
+          .firestore()
+          .collection("posts")
+          .add({
+            uid,
+            postText,
+            displayName,
+            date,
+            email
+          });
+        alert("tamamlandi.");
+      } catch (error) {
+        alert(error);
       }
-    }
-  };
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      return result;
+    } else {
+      alert("bir seyler yazmalisin");
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {}}>
           <Ionicons
             name="arrow-back-outline"
             size={24}
             color="#D8D9DB"
           ></Ionicons>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            createPost();
+          }}
+        >
           <Text style={{ fontWeight: "500" }}>Post</Text>
         </TouchableOpacity>
       </View>
@@ -69,17 +68,12 @@ const AddPostScreen = () => {
         ></Image>
         <TextInput
           autoFocus={true}
-          //multiline={true}
-          numberOfLines={4}
-          style={{ flex: 1 }}
+          style={{ flex: 1, backgroundColor:"#FFFFFF", }}
           placeholder="Want to share something?"
-        ></TextInput>
+          value={postText}
+          onChangeText={(text) => setPostText(text)}
+        />
       </View>
-
-      <TouchableOpacity style={styles.photo} onPress={takePicture}>
-        <Ionicons name="camera-outline" size={24}></Ionicons>
-        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
