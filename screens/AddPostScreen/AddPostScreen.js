@@ -32,12 +32,14 @@ const AddPostScreen = () => {
             date,
             email
           });
-        alert("tamamlandi.");
+        alert("Post Sended.");
+        setPostText(null);
       } catch (error) {
         alert(error);
+        setPostText(null);
       }
     } else {
-      alert("bir seyler yazmalisin");
+      alert("You should write something");
     }
   };
 
