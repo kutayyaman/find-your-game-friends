@@ -80,6 +80,7 @@ const ChatScreen = () => {
           bottom: 16,
           right: 16,
           marginBottom: 66,
+          backgroundColor:'black'
         }}
         icon="plus"
         onPress={() => {
