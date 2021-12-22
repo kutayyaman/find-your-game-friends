@@ -92,15 +92,17 @@ const PostCard = ({ item }) => {
           <InteractionText>Send Message</InteractionText>
         </Interaction>
         </InteractionWrapper>*/}
-      {item.data()?.email === email && <TouchableOpacity style={{ alignItems: "flex-end" }} onPress={()=>{yesOrNoDialogRef.current?.showDialog();}}>
-        <Ionicons
-          name="trash-outline"
-          size={20}
-          style={{
-            color: "red",
-          }}
-        />
-      </TouchableOpacity>}
+      {item.data()?.email === email && 
+        <TouchableOpacity style={{ alignItems: "flex-end" }} onPress={()=>{yesOrNoDialogRef.current?.showDialog();}}>
+          <Ionicons
+            name="trash-outline"
+            size={20}
+            style={{
+              color: "red",
+            }}
+          />
+        </TouchableOpacity>
+      }
       <Divider />
       <YesOrNoDialog ref={yesOrNoDialogRef} description="Are you sure to delete the post?" yesAction={()=>{deletePost(item.id)}}/>
     </Card>
